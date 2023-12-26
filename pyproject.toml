@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "perfecter"
+version = "0.1.0"
+description = "A discord bot wrapping closely with SFinder"
+authors = ["timelessnesses <timelessnesses@timelessnesses.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+discord = "^2.3.2"
+requests = "^2.31.0"
+coloredlogs = "^15.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
