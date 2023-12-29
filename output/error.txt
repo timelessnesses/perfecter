@@ -1,0 +1,20 @@
+# DateTime: 2023/12/29 10:00:02
+# Version: 1.43
+# command: percent
+# Error message summary:
+  * Cannot open field file [FinderParseException]
+
+
+------------------------------
+# Stack trace:
+------------------------------
+
+exceptions.FinderParseException: Cannot open field file
+	at entry.common.Loader.loadFieldData(Loader.java:70)
+	at entry.percent.PercentSettingParser.parse(PercentSettingParser.java:45)
+	at entry.common.SettingParser.parse(SettingParser.java:43)
+	at entry.EntryPointMain.getPercentEntryPoint(EntryPointMain.java:225)
+	at entry.EntryPointMain.createEntryPoint(EntryPointMain.java:200)
+	at entry.EntryPointMain.main(EntryPointMain.java:86)
+	at Main.main(Main.java:5)
+==============================
