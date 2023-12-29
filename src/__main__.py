@@ -13,12 +13,17 @@ coloredlogs.install(
 #     datefmt="%Y/%m/%d %H:%M:%S",
 # )
 
-from .perfecter_sfinder import SolutionFinderJava as SolutionFinder
+from .perfecter_sfinder import SolutionFinderJava
+from .perfecter_sfinder.types import Drop, Hold, Kicks
 
-# import logging
-logging.getLogger("Perfecter.src.perfecter_sfinder.SolutionFinderJava").setLevel(
-    logging.NOTSET
-)
-
-SolutionFinder()
-# print("hello!!!")
+a = SolutionFinderJava()
+a.percent("""
+XXXXXX____
+XXXXXX____
+XXXXXX____
+XXXXXX____
+XXXXXX____
+XXXXXX____
+XXXXXXXX__
+XXXXXXXX__
+""", "*p4", "v115@9gE8DeG8CeH8BeG8CeA8JeAgH")

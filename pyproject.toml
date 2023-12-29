@@ -11,6 +11,8 @@ python = "^3.10"
 discord = "^2.3.2"
 requests = "^2.31.0"
 coloredlogs = "^15.0.1"
+psutil = "^5.9.7"
+typing-extensions = "^4.9.0"
 
 
 [build-system]
