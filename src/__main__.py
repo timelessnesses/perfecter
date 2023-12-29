@@ -17,7 +17,8 @@ from .perfecter_sfinder import SolutionFinderJava
 from .perfecter_sfinder.types import Drop, Hold, Kicks
 
 a = SolutionFinderJava()
-a.percent("""
+a.percent(
+    """
 XXXXXX____
 XXXXXX____
 XXXXXX____
@@ -26,4 +27,7 @@ XXXXXX____
 XXXXXX____
 XXXXXXXX__
 XXXXXXXX__
-""", "*p4", "v115@9gE8DeG8CeH8BeG8CeA8JeAgH")
+""",
+    "*p4",
+    "v115@9gE8DeG8CeH8BeG8CeA8JeAgH",
+)

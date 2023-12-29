@@ -2,17 +2,20 @@
 Perfecter - SFinder lib
 """
 
+import copy
 import logging
 import os
 import pathlib
+import re
 import subprocess
 import sys
-import copy
-import psutil
-from .types import Drop, Hold, Kicks
-import re
-from .output_parser import PercentParser
 import tempfile
+
+import psutil
+
+from .output_parser import PercentParser
+from .types import Drop, Hold, Kicks
+
 
 def init_log():
     formatting = logging.Formatter(
@@ -64,7 +67,9 @@ class SolutionFinderJava:
     cwd = executable_path
     logger = log
     VERSION: str
-    USABLE_THREADS = (psutil.cpu_count(logical=False) * 2) // 2 # get half usable threads instead
+    USABLE_THREADS = (
+        psutil.cpu_count(logical=False) * 2
+    ) // 2  # get half usable threads instead
 
     def __init__(self) -> None:
         self.logger.debug("SolutionFinderJava initialized")
@@ -72,7 +77,9 @@ class SolutionFinderJava:
         # self.logger.debug(
         #     f"Execution line: {self.converted('-h')}"
         # )
-        self.VERSION = self.run_command("-v").stdout.decode("utf-8").replace("Version:", "")
+        self.VERSION = (
+            self.run_command("-v").stdout.decode("utf-8").replace("Version:", "")
+        )
         self.logger.info(f"sfinder.jar version: {self.VERSION}")
 
     def run_command(self, *args: str) -> subprocess.CompletedProcess[bytes]:
@@ -96,16 +103,50 @@ class SolutionFinderJava:
         copied[2] = copied[2].format(path=self.jar_file)
         copied.extend(args)
         return copied
-    
-    def percent(self, field: str, patterns: str, tetfu: str, clear_line: int=4, drop: Drop=Drop.SOFT, failedcount: int=100, hold: Hold=Hold.USE, kicks: Kicks=Kicks.SRS, page: int=1, tree_depth: int=3) -> PercentParser:
+
+    def percent(
+        self,
+        field: str,
+        patterns: str,
+        tetfu: str,
+        clear_line: int = 4,
+        drop: Drop = Drop.SOFT,
+        failedcount: int = 100,
+        hold: Hold = Hold.USE,
+        kicks: Kicks = Kicks.SRS,
+        page: int = 1,
+        tree_depth: int = 3,
+    ) -> PercentParser:
         path = self.write_field(field)
-        output = self.run_command("percent","-c", str(clear_line), "-d", drop.value, "-fc", str(failedcount), "-fp", path.name, "-H", hold.value, "-K", kicks.value, "-P", str(page), "-t", tetfu, "-td", str(tree_depth), "-th", str(self.USABLE_THREADS), "-p", patterns)
+        output = self.run_command(
+            "percent",
+            "-c",
+            str(clear_line),
+            "-d",
+            drop.value,
+            "-fc",
+            str(failedcount),
+            "-fp",
+            path.name,
+            "-H",
+            hold.value,
+            "-K",
+            kicks.value,
+            "-P",
+            str(page),
+            "-t",
+            tetfu,
+            "-td",
+            str(tree_depth),
+            "-th",
+            str(self.USABLE_THREADS),
+            "-p",
+            patterns,
+        )
         path.close()
         return PercentParser.parser(output.stdout.decode())
-    
+
     def write_field(self, field: str) -> "tempfile._TemporaryFileWrapper[str]":
         fp = tempfile.NamedTemporaryFile("w")
         fp.write(field)
         return fp
-            
-    
